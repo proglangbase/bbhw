@@ -1,0 +1,4 @@
+#!/bin/sh
+if gcc -std=gnu11 -o ghw ghw.c 2>&1; then
+  ./ghw $*
+fi
