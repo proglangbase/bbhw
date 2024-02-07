@@ -26,4 +26,4 @@ for ($i = $countdown; $i > 0; $i--) {
   echo "$i...";
   sleep(1);
 }
-echo "Goodbye.\n";
+echo "Bye Bye.\n";

@@ -1,4 +1,4 @@
-# Goodbye Hello World
+# Bye Bye Hello World
 
 Traditionally, the **`Hello World`** program is the first example offered as the
 introduction to a programming language and does nothing more than output the
@@ -26,7 +26,7 @@ we will examine by expanding `Hello World` to include:
 
 ## Usage
 
-`ghw [count]`
+`bbhw [count]`
 
 where: count = Number of iterations. User prompted of not supplied.
 
@@ -35,8 +35,5 @@ where: count = Number of iterations. User prompted of not supplied.
 Counts down from `count` to `0`, pausing between each iteration, and prints each
 count until complete.
 
-<img src="ghw-animated.gif"/>
+<img src="README-running.gif"/>
 
-
-  
-   

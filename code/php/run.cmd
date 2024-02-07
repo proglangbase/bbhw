@@ -1,1 +1,1 @@
-@php ghw.php %*
+@php bbhw.php %*

@@ -35,6 +35,6 @@ int main(int argc, const char *argv[]) {
         fflush(stdout);
         nanosleep(&(struct timespec){.tv_sec=1}, NULL);
     }
-    printf("Goodbye.\n");
+    printf("Bye Bye.\n");
     return 0;
 };

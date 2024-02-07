@@ -1,4 +1,4 @@
 #!/bin/sh
-if gcc -std=gnu11 -o ghw ghw.c 2>&1; then
-  ./ghw $*
+if gcc -std=gnu11 -o bbhw bbhw.c 2>&1; then
+  ./bbhw $*
 fi
