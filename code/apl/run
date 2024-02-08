@@ -1,0 +1,25 @@
+#!/bin/sh
+#
+#   Copyright © 2024 Christopher Augustus
+#
+#   This Source Code Form is subject to the terms of the Mozilla Public
+#   License, v. 2.0. If a copy of the MPL was not distributed with this
+#   file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+APL=$(which apl)
+if [ "$APL" = "" ]; then
+    PATH_HERE=$(pwd)/$(dirname $0)
+    PATH_REPO="$PATH_HERE/gnu-apl"
+    APL="$PATH_REPO/src/apl"
+    if [ ! -f $APL ]; then
+        if [ ! -d $PATH_REPO ]; then
+            git clone -v git@gitlab.com:aboa/gnu-apl
+        fi
+        cd $PATH_REPO
+        git checkout v1.8
+        ./configure CXX_WERROR=no
+        make
+        cd $PATH_HERE
+    fi
+fi
+$APL -s -f bbhw.apl -- $@
