@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+#   Copyright © 2024 Christopher Augustus
+#
+#   This Source Code Form is subject to the terms of the Mozilla Public
+#   License, v. 2.0. If a copy of the MPL was not distributed with this
+#   file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+ABOA=$(which aboa)
+if [ "$ABOA" = "" ]; then
+    PATH_HERE=$(pwd)/$(dirname $0)
+    PATH_REPO="$PATH_HERE/aboa"
+    PATH_CODE="$PATH_REPO/code/aboa-s7"
+    ABOA="$PATH_CODE/aboa"
+    if [ ! -f $ABOA ]; then
+        if [ ! -d $PATH_REPO ]; then
+            git clone -v git@gitlab.com:aboa/aboa
+        fi
+        cd $PATH_CODE
+        ./build
+        cd $PATH_HERE
+    fi
+fi
+$ABOA bbhw.aboa "$@"
