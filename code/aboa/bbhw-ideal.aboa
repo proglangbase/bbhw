@@ -1,0 +1,17 @@
+#
+#   Copyright © 2024 Christopher Augustus
+#
+#   This Source Code Form is subject to the terms of the Mozilla Public
+#   License, v. 2.0. If a copy of the MPL was not distributed with this
+#   file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+!>main(&[1
+    !>count(
+        & |  >($io-si  "countdown: ")
+        $i| (>($io-so "Invalid countdown "_", try again...\n")
+            (>count)
+        )count
+    >($io-so "World, Hello...") &)
+    >($iter (($io-so "~A..."(&-@i)) >($cc-sleep 1)))
+    >($io-so "Bye Bye.\n")
+    )main
