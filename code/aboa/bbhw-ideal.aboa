@@ -6,12 +6,10 @@
 #   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #
 !>main(&[1
-    !>count(
-        & |  >($io-si  "countdown: ")
-        $i| (>($io-so "Invalid countdown "_", try again...\n")
-            (>count)
+    !>count(& | ("countdown: " >$io-si)
+            $i| ("Invalid countdown ",&,", try again...\n" >$io-so @ >count)
         )count
-    >($io-so "World, Hello...") &)
-    >($iter (($io-so "~A..."(&-@i)) >($cc-sleep 1)))
-    >($io-so "Bye Bye.\n")
+    ("World, Hello..." >$io-so &)
+    >$iter (&-@i,"..." >$io-so 1 >$cc-sleep)
+    "Bye Bye.\n"       >$io-so
     )main
