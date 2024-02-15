@@ -1,0 +1,1 @@
+{(''≡⍵)⍱0∊⍵∊⎕D:⍞←'Bye Bye.'⊣{⍞←'...',⍨⍕⍵ ⋄ ⎕DL 1}¨⌽⍳⍎⍵⊣⍞←'World, Hello...' ⋄⍞←(''≢⍵)/'Invalid countdown ',⍵,' try again...',⎕UCS 10 ⋄ ⍞←'countdown: ' ⋄ ∇⍞}∊1↓2 ⎕NQ # 'GetCommandLineArgs'

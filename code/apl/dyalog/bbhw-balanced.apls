@@ -1,0 +1,16 @@
+
+∇ c←GetCount c
+  :While ''≡c
+  :OrIf 0∊c∊⎕D
+      ⍞←(''≢c)/'Invalid countdown ',c,' try again...',⎕UCS 10
+      ⍞←'countdown: ' ⋄ c←⍞
+  :EndWhile
+∇
+
+∇ Greet c;i
+  ⍞←'World, Hello...'
+  {⍞←'...',⍨⍕i ⋄ ⎕DL 1}¨⌽⍳⍎c
+  ⍞←'Bye Bye.'
+∇
+
+Greet GetCount ∊1↓2 ⎕NQ # 'GetCommandLineArgs'

@@ -1,0 +1,12 @@
+
+  GetCount←{
+      (''≡⍵)⍱0∊⍵∊⎕D:⍵
+      ⍞←(''≢⍵)/'Invalid countdown ',⍵,' try again...',⎕UCS 10
+      ⍞←'countdown: ' ⋄ ∇⍞
+  }
+
+  Greet←{
+      ⍞←'World, Hello...' ⋄ {⍞←'...',⍨⍕⍵ ⋄ ⎕DL 1}¨⌽⍳⍎⍵ ⋄ ⍞←'Bye Bye.'
+  }
+
+Greet GetCount ∊1↓2 ⎕NQ # 'GetCommandLineArgs'
