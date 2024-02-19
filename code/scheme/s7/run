@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+#   Copyright © 2024 Christopher Augustus
+#
+#   This Source Code Form is subject to the terms of the Mozilla Public
+#   License, v. 2.0. If a copy of the MPL was not distributed with this
+#   file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+S7=$(which s7)
+if [ "$S7" = "" ]; then
+    PATH_HERE=$(pwd)/$(dirname $0)
+    PATH_REPO="$PATH_HERE/s7-patched"
+    S7="$PATH_REPO/s7"
+    if [ ! -f $S7 ]; then
+        if [ ! -d $PATH_REPO ]; then
+            git clone -v git@gitlab.com:aboa/s7-patched
+        fi
+        cd $PATH_REPO
+        gcc -o s7 repl.c s7.c
+        cd $PATH_HERE
+    fi
+fi
+$S7 bbhw.scm "$@"
