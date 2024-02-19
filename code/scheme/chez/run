@@ -1,0 +1,35 @@
+#!/bin/sh
+#
+#   Copyright © 2024 Christopher Augustus
+#
+#   This Source Code Form is subject to the terms of the Mozilla Public
+#   License, v. 2.0. If a copy of the MPL was not distributed with this
+#   file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+CHEZ=$(which scheme)
+if [ "$CHEZ" = "" ]; then
+    PATH_HERE=$(pwd)/$(dirname $0)
+    PATH_REPO="$PATH_HERE/ChezScheme"
+    case $(uname) in
+        Darwin) # NOTE: this may not work or be necessary with newer macOS due to its SIP
+            WORK_AREA=tarm64osx
+            MACHINE_TYPE=$WORK_AREA
+            ;;
+        *) # assume POSIX
+            echo "Failed because only Apple Silicon is currently supported ### TODO"
+            ;;
+    esac
+    CHEZ="$PATH_REPO/$WORK_AREA/bin/$MACHINE_TYPE/scheme"
+    if [ ! -f $CHEZ ]; then
+        if [ ! -d $PATH_REPO ]; then
+            git clone -v git@github.com:aboalang/ChezScheme
+        fi
+        cd $PATH_REPO
+        git checkout main-aboa
+        git submodule update --init --recursive
+        ./configure --disable-iconv --disable-x11 --threads
+        make
+        cd $PATH_HERE
+    fi
+fi
+$CHEZ --script bbhw.ss "$@"
