@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+#   Copyright © 2024 Christopher Augustus
+#
+#   This Source Code Form is subject to the terms of the Mozilla Public
+#   License, v. 2.0. If a copy of the MPL was not distributed with this
+#   file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+RACKET=$(which racket)
+if [ "$RACKET" = "" ]; then
+    PATH_HERE=$(pwd)/$(dirname $0)
+    PATH_REPO="$PATH_HERE/racket"
+    RACKET="$PATH_REPO/racket/bin/racket"
+    if [ ! -f $RACKET ]; then
+        if [ ! -d $PATH_REPO ]; then
+            git clone -v git@github.com:aboalang/racket
+        fi
+        cd $PATH_REPO
+        git checkout v8.10
+        make PKGS=""
+        cd $PATH_HERE
+    fi
+fi
+$RACKET -t bbhw.rkt -- "$@"
