@@ -15,7 +15,7 @@ Lcheck:
     'Invalid countdown ',C,', try again...'
     →Linput
 Lvalid:
-    Z←{⍺+⍵×10}/{(⎕UCS ⍵)-(⎕UCS '0')}⌽C
+    Z←⍎C
 ∇
 COUNT←GetCount
 ⍞← 'World, Hello...'
