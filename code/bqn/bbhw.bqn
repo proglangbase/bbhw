@@ -9,17 +9,15 @@ count ← ¯1
 input ← ⊑•args∾⟨""⟩
 {𝕩•_while_𝕨@}´ {𝕤⋄count=¯1}‿{𝕤
     { input≢"" ? @
-        ; •Out "countdown: " ⋄ input ↩ •GetLine@
-            # TODO: ^ ### SUPRESS NEWLINE
+        ; •term.OutRaw "countdown: " ⋄ input ↩ •GetLine@
     }
     { (input≢"") ∧ (⊑×´{𝕩∊"0123456789"}¨input) ?
-        count ↩ {𝕨+𝕩×10}´{𝕩-'0'}⌽input
+        count ↩ •BQN input
         ; •Out "Invalid countdown "∾input∾", try again..."
           input ↩ ""
     }
 }
-•Out "World, Hello..."
-{•Out (•Fmt 𝕩+1)∾"..." ⋄ •Delay 1}¨⌽↕count
-    # TODO: ^ ### SUPRESS NEWLINE
+•term.OutRaw "World, Hello..." ⋄ •term.Flush@
+{•term.OutRaw (•Fmt 𝕩+1)∾"..." ⋄ •term.Flush@ ⋄ •Delay 1}¨⌽↕count
 •Out "Bye Bye."
 •Exit 0
