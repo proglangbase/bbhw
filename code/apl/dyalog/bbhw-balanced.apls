@@ -3,13 +3,13 @@
   :While ''≡c
   :OrIf 0∊c∊⎕D
       ⍞←(''≢c)/'Invalid countdown ',c,' try again...',⎕UCS 10
-      ⍞←'countdown: ' ⋄ c←⍞
+      c←{⍞←⍵ ⋄ (≢⍵)↓⍞}'countdown: '
   :EndWhile
 ∇
 
 ∇ Greet c;i
   ⍞←'World, Hello...'
-  {⍞←'...',⍨⍕i ⋄ ⎕DL 1}¨⌽⍳⍎c
+  {⍞←'...',⍨⍕⍵ ⋄ ⎕DL 1}¨⌽⍳⍎c
   ⍞←'Bye Bye.'
 ∇
 

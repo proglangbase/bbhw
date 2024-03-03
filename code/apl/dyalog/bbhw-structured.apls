@@ -1,11 +1,13 @@
 
-∇ c←GetCount c
+∇ c←GetCount c;p
   :While ''≡c
   :OrIf 0∊c∊⎕D
       :If ''≢c
           ⍞←'Invalid countdown ',c,' try again...',⎕UCS 10
       :EndIf
-      ⍞←'countdown: ' ⋄ c←⍞
+      p←'countdown: '
+      ⍞←p
+      c←(≢p)↓⍞
   :EndWhile
 ∇
 
