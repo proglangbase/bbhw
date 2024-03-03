@@ -6,7 +6,7 @@
   }
 
   Greet←{
-      ⍞←'World, Hello...' ⋄ {⍞←'...',⍨⍕⍵ ⋄ ⎕DL 1}¨⌽⍳⍎⍵ ⋄ ⍞←'Bye Bye.'
+      ⍞←'World, Hello...' ⋄ {⍞←(×⍵)/'...',⍨⍕⍵ ⋄ ⎕DL ×⍵}¨⌽⍳⍎⍵ ⋄ ⍞←'Bye Bye.'
   }
 
 Greet GetCount ∊1↓2 ⎕NQ # 'GetCommandLineArgs'
