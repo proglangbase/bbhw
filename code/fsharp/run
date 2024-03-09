@@ -1,0 +1,14 @@
+#!/bin/sh
+DOTNET=$(which dotnet)
+if [ "$DOTNET" = "" ]; then
+    PATH_HERE=$(pwd)/$(dirname $0)
+    PATH_TOOL="$PATH_HERE/.dotnet"
+    DOTNET="$PATH_TOOL/dotnet"
+    if [ ! -e $DOTNET ]; then
+        rm -fr "$PATH_TOOL"
+        wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
+        chmod +x ./dotnet-install.sh
+        ./dotnet-install.sh --version latest --install-dir "$PATH_TOOL"
+    fi
+fi
+$DOTNET fsi --exec run.fsx $@
