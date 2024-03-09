@@ -2,11 +2,19 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="bbhw.fs" />
+    <Compile Include="run.fs" />
+    <None Include="run.fsx" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="run" />
+    <None Include="run.cmd" />
+    <None Include="README.md" />
+  </ItemGroup>
+
 
 </Project>

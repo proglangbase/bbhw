@@ -2,3 +2,5 @@
 *.swp
 /.project
 /code/fsharp/Properties/launchSettings.json
+/code/fsharp/.dotnet
+/code/fsharp/dotnet-install.sh
