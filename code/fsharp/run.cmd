@@ -1,2 +1,1 @@
-@dotnet fsi --exec run.fsx %* 
-
+@dotnet fsi --exec bbhw.fsx %* 

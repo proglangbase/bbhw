@@ -11,4 +11,4 @@ if [ "$DOTNET" = "" ]; then
         ./dotnet-install.sh --version latest --install-dir "$PATH_TOOL"
     fi
 fi
-$DOTNET fsi --exec run.fsx $@
+$DOTNET fsi --exec bbhw.fsx $@

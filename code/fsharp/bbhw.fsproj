@@ -6,9 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="bbhw.fs" />
-    <Compile Include="run.fs" />
-    <None Include="run.fsx" />
+    <Compile Include="bbhw.fsx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="run" />
