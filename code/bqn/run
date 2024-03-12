@@ -6,7 +6,7 @@
 #   License, v. 2.0. If a copy of the MPL was not distributed with this
 #   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #
-BQN=$(which bqn)
+BQN=$(which BQN)
 if [ "$BQN" = "" ]; then
     PATH_HERE=$(pwd)/$(dirname $0)
     PATH_REPO="$PATH_HERE/cbqn"
@@ -17,7 +17,7 @@ if [ "$BQN" = "" ]; then
         fi
         cd $PATH_REPO
         git checkout v0.6.0
-        make
+        make o3n CC=clang CXX=clang++ FFI=0
         cd $PATH_HERE
     fi
 fi
