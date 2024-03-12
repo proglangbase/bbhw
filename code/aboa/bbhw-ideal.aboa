@@ -5,10 +5,46 @@
 #   License, v. 2.0. If a copy of the MPL was not distributed with this
 #   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #
-!>main(_@1
-    !>(_ | ("countdown: " >$io-si)
-       $i| ("Invalid countdown "~_~", try again...\n" >$io-so @ !))
-    ("World, Hello..." >$io-so _)
-    >$iter (_-_i~"..." >$io-so 1 >$cc-sleep)
-    "Bye Bye.\n"       >$io-so
-    )main
+
+>(=[] ? ("countdown: " >$io:si) _
+  %i ! ("Invalid countdown "~_~", try again...\n" >$io:sof [] <))
+("World, Hello..." >$io:sof _)
+..0 & (@1~"..." >$io:sof 1 >$cc:sleep)
+"Bye Bye.\n" >$io:sof
+
+#   L               F               R             operation
+
+#   arglist         >               (             dyadic execute proc begin
+#   arglist         =               []            dyadic equals empty
+#   false/true      ?               ...           triadic if true
+#   []              (                             monadic eval begin (TRUE expression)
+#   []              "count..."                    monadic value
+#   "count..."      >               $io:si        dyadic execute pre proc standard input with prompt
+#   input           )                             monadic eval end
+#   arglist         _                             monadic carry (FALSE expression)
+#   arglist/input   %i                            monadic convert to type integer
+#   int/fail        !               ...           dyadic on fail
+#   int,fail        (                             monadic eval begin (FAIL expression)
+#   int,fail        "Invalid..."                  monadic value
+#   "Invalid..."    ~               _             dyadic append carry
+#   "Invalid..x"    ~               ", try..."    dyadic append value
+#   "Inv..x..try"   >               $io:sof       dyadic execute pre proc standard output and flush
+#   "Inv..x..try"   []                            monadic empty
+#   []              <                             monadic recurse
+#   []              )                             monadic eval end (FAIL expression)
+#   int             )                             monadic proc end
+#   int             (                             monadic eval begin
+#   int             "World..."                    monadic value
+#   "World..."      >               $io:sof       dyadic execute pre proc standard output and flush
+#   "World..."      _                             monadic carry
+#   int             )                             monadic eval end
+#   int             ..              0             dyadic range
+#   int..0          &               (             dyadic each/fold eval begin
+#   int..0,i        @               1             dyadic extract element 1
+#   i               ~               "..."         dyadic append value
+#   "i..."          >               $io:sof       dyadic execute pre proc standard output and flush
+#   "i..."          1                             monadic value
+#   1               >               $cc:sleep     dyadic execute pre proc sleep
+#   1               )                             monadic eval end
+#   0               "Bye Bye.\n"                  monadic value
+#   "Bye Bye.\n"    >               $io:sof       dyadic execute pre proc standard output and flush
