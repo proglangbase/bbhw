@@ -6,11 +6,11 @@
 #   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #
 
->(=[] ? ("countdown: " >$io:si) _
-  %i ! ("Invalid countdown "~_~", try again...\n" >$io:sof [] <))
-("World, Hello..." >$io:sof _)
-..0 & (@1~"..." >$io:sof 1 >$cc:sleep)
-"Bye Bye.\n" >$io:sof
+>(=[] ? ("countdown: " >$io.si) _
+  %i ! ("Invalid countdown "~_~", try again...\n" >$io.sof [] <))
+("World, Hello..." >$io.sof _)
+..0 & (_1~"..." >$io.sof 1 >$cc.sleep)
+"Bye Bye.\n" >$io.sof
 
 #   L               F               R             operation
 
@@ -28,23 +28,23 @@
 #   int,fail        "Invalid..."                  monadic value
 #   "Invalid..."    ~               _             dyadic append carry
 #   "Invalid..x"    ~               ", try..."    dyadic append value
-#   "Inv..x..try"   >               $io:sof       dyadic execute pre proc standard output and flush
+#   "Inv..x..try"   >               $io.sof       dyadic execute pre proc standard output and flush
 #   "Inv..x..try"   []                            monadic empty
 #   []              <                             monadic recurse
 #   []              )                             monadic eval end (FAIL expression)
 #   int             )                             monadic proc end
 #   int             (                             monadic eval begin
 #   int             "World..."                    monadic value
-#   "World..."      >               $io:sof       dyadic execute pre proc standard output and flush
+#   "World..."      >               $io.sof       dyadic execute pre proc standard output and flush
 #   "World..."      _                             monadic carry
 #   int             )                             monadic eval end
 #   int             ..              0             dyadic range
 #   int..0          &               (             dyadic each/fold eval begin
-#   int..0,i        @               1             dyadic extract element 1
+#   int..0,i        _               1             dyadic extract element 1
 #   i               ~               "..."         dyadic append value
-#   "i..."          >               $io:sof       dyadic execute pre proc standard output and flush
+#   "i..."          >               $io.sof       dyadic execute pre proc standard output and flush
 #   "i..."          1                             monadic value
-#   1               >               $cc:sleep     dyadic execute pre proc sleep
+#   1               >               $cc.sleep     dyadic execute pre proc sleep
 #   1               )                             monadic eval end
 #   0               "Bye Bye.\n"                  monadic value
-#   "Bye Bye.\n"    >               $io:sof       dyadic execute pre proc standard output and flush
+#   "Bye Bye.\n"    >               $io.sof       dyadic execute pre proc standard output and flush
