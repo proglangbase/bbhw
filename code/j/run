@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+#   Copyright © 2024 Christopher Augustus
+#
+#   This Source Code Form is subject to the terms of the Mozilla Public
+#   License, v. 2.0. If a copy of the MPL was not distributed with this
+#   file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+case $(uname) in
+  Darwin) # NOTE: this may not work or be necessary with newer macOS due to its SIP
+    JCONSOLE="/Applications/j9.5/bin/jconsole"
+    ;;
+  *) # assume POSIX
+    JCONSOLE=$(which JCONSOLE)
+    ;;
+esac
+if [ ! -f $JCONSOLE ]; then
+  echo "J must be installed, which can be obtained at"
+  echo "https://code.jsoftware.com/wiki/System/Installation"
+  exit 1
+fi
+$JCONSOLE -jscript bbhw.ijs $@
