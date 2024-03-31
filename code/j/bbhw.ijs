@@ -7,15 +7,13 @@ Note''
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 )
 main=:3 :0
-  co=:''
-  in=:>2{ARGV,<''
-  {{
-    {{in=:1!:1[1[1!:2&4'countdown: '}}^:(0&=)#in
-    {{in=:''[1!:2&2'Invalid countdown ',":y,', try again...'}}^:{{0=(#co=:".y)}}in
-    y+1
-  }}^:{{0=#co}}^:_(0)
+  input=:>2{ARGV,<''
+  count=.>{:{{
+    {{input=:1!:1[1[1!:2&4'countdown: '}}^:(0&=)#input
+    (<1+>{.y),<{{input=:''[1!:2&2'Invalid countdown ',":y,', try again...'}}(^:{{0=#y}})".input
+  }}^:{{0=#>{:y}}^:_(<0),<''
   1!:2&4'World, Hello...'
-  {{usleep 1000000[1!:2&4(>":y),'...'}}each|.1+i.co
+  {{usleep 1000000[1!:2&4(>":y),'...'}}each|.1+i.count
     NB. TODO: ^ ### FLUSH NEEDED ON macOS BUT NOT ON Windows
   0 0$1!:2&2'Bye Bye.'
 )
