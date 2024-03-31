@@ -9,10 +9,11 @@ Note''
 main=:3 :0
   co=:''
   in=:>2{ARGV,<''
-  while.0=#co do.
+  {{
     {{in=:1!:1[1[1!:2&4'countdown: '}}^:(0&=)#in
     {{in=:''[1!:2&2'Invalid countdown ',":y,', try again...'}}^:{{0=(#co=:".y)}}in
-  end.
+    y+1
+  }}^:{{0=#co}}^:_(0)
   1!:2&4'World, Hello...'
   {{usleep 1000000[1!:2&4(>":y),'...'}}each|.1+i.co
     NB. TODO: ^ ### FLUSH NEEDED ON macOS BUT NOT ON Windows
