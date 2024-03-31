@@ -7,13 +7,18 @@ Note''
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 )
 main=:3 :0
+  NB. TODO: @@@ eliminate variable "input"
   input=:>2{ARGV,<''
   count=.>{:{{
     {{input=:1!:1[1[1!:2&4'countdown: '}}^:(0&=)#input
-    (<1+>{.y),<{{input=:''[1!:2&2'Invalid countdown ',":y,', try again...'}}(^:{{0=#y}})".input
-  }}^:{{0=#>{:y}}^:_(<0),<''
+    (<1+>{.y),<{{input=:''[1!:2&2'Invalid countdown ',":input,', try again...'}}(^:(0=#))".input
+  }}^:((0=#)@:>@:{:)^:_(<0),<''
   1!:2&4'World, Hello...'
-  {{usleep 1000000[1!:2&4(>":y),'...'}}each|.1+i.count
+  NB. TODO: @@@ i. works inside ( ) but usleep does not
+  NB. (i.     1000000](1!:2&4@:('...',~(>@:":))))&.>|.1+i.count
+  NB. (usleep 1000000](1!:2&4@:('...',~(>@:":))))&.>|.1+i.count
+  NB. TODO: @@@ usleep only works inside the dfns below
+  {{usleep 1000000[1!:2&4(>":y),'...'}}&.>|.1+i.count
     NB. TODO: ^ ### FLUSH NEEDED ON macOS BUT NOT ON Windows
   0 0$1!:2&2'Bye Bye.'
 )
