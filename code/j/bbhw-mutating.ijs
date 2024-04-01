@@ -8,21 +8,23 @@ Note''
 )
 main =: verb define
   count =: ''
-  input =: >2{ARGV,<''
+  input =: > 2{ ARGV,<''
   while. 0 = #count do.
     if. 0 = #input do.
       tmoutput 'countdown: '
-      input =: 1!:1 [ 1
+      input =: 1!:1 [ 1             NB. global mutation!
     end.
-    if. 0 = # count =: ".input do.
+    if. 0 = #count =: ".input do.   NB. global mutation!
       smoutput 'Invalid countdown ',":input,', try again...'
-      input =: ''
+      input =: ''                   NB. global mutation!
     end.
   end.
   tmoutput 'World, Hello...'
-  {{tmoutput (>":y),'...'
+  {{
+    tmoutput (>":y),'...'
     NB. TODO: ### FLUSH NEEDED ON macOS BUT NOT ON Windows
-    usleep 1000000 }} each |.1 + i.count
+    usleep 1000000
+  }} each |. 1 + i.count
   smoutput 'Bye Bye.'
   exit
 )
