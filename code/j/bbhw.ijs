@@ -8,17 +8,17 @@ Note''
 )
 main =: 3 : 0
   count =. ''
-  input =. >2{ARGV,<''
+  input =. >2{ARGV,a:
   while. 0=#count do.
     input =. {{ 1!:1(1) [ 1!:2&4 'countdown: '
       }} ^: {{ 0=#y }} input  NB. local mutation!
     count =. ". input         NB. local mutation!
-    input {{ 1!:2&2 'Invalid countdown ', ": x ,', try again...'
+    input {{ 1!:2&2 'Invalid countdown ', x ,', try again...'
       }} ^: {{ 0=#y [ x }} count
     input =. ''               NB. local mutation!
   end.
   1!:2&4 'World, Hello...'
-  {{ usleep 1000000 [ 1!:2&4 (> ": y),'...' }} &.> |. 1+i.count
+  {{ usleep 1000000 [ 1!:2&4 (":y),'...' }} &.> (- i.)count
     NB. TODO: ^ ### FLUSH NEEDED ON macOS BUT NOT ON Windows
     NB. note usleep breaks loop if within train instead of dd
   0 0 $ 1!:2&2 'Bye Bye.'
