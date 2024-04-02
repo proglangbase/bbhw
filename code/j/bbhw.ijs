@@ -9,11 +9,13 @@ Note''
 main =: 3 : 0
   count =. ''
   input =. >2{ARGV,<''
-  while. 0 = # count do.
-    input =. {{ 1!:1(1) [ 1!:2&4 'countdown: ' }} ^: {{ 0=#y }} input
-    count =. ". input
-    input {{ 1!:2&2 'Invalid countdown ',":x,', try again...' }} ^: {{ 0=#y [ x }} count
-    input =. ''
+  while. 0=#count do.
+    input =. {{ 1!:1(1) [ 1!:2&4 'countdown: '
+      }} ^: {{ 0=#y }} input  NB. local mutation!
+    count =. ". input         NB. local mutation!
+    input {{ 1!:2&2 'Invalid countdown ',":x,', try again...'
+      }} ^: {{ 0=#y [ x }} count
+    input =. ''               NB. local mutation!
   end.
   1!:2&4 'World, Hello...'
   {{ usleep 1000000 [ 1!:2&4 (>":y),'...' }} &.> |.1+i.count
