@@ -21,7 +21,7 @@ main =: 3 : 0
   {{ usleep 1000000 [ 1!:2&4 (":y),'...' }} &.> (- i.)count
     NB. TODO: ^ ### FLUSH NEEDED ON macOS BUT NOT ON Windows
     NB. note usleep breaks loop if within train instead of dd
-  0 0 $ 1!:2&2 'Bye Bye.'
+  'Bye Bye.'
 )
 9!:29(1) [ 9!:27 'main _'
 NB. ^ help from tangentstorm and
