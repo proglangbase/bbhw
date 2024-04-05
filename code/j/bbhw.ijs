@@ -8,11 +8,12 @@ Note''
 )
 main =: 3 : 0
   input =. >2{ARGV,a:
-  whilst. 0=#count do.
-    count =. ". input =. {{ 1!:1(1) [ 1!:2&4 'countdown: ' NB. local mutation!
+  badnum =: ([:((_=]) +. (0>]) +. (~:<.))(1$])) +. (1~:#)
+  whilst. badnum count do.
+    count =. _ ". input =. {{ 1!:1(1) [ 1!:2&4 'countdown: ' NB. local mutation!
       }} ^: (0=#) input
     input {{ 1!:2&2 'Invalid countdown ',x,', try again...'
-      }} ^: {{ 0=#y [ x }} count
+      }} ^: ([:badnum]) count
     input =. '' NB. local mutation!
   end.
   1!:2&4 'World, Hello...'
