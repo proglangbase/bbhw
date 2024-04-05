@@ -1,10 +1,11 @@
 -module(bbhw).
 -export([main/0, main/1]).
 
-main()    -> main([]). % `erl -noshell -s bbhw main [countdown] -s init stop`
-main([])  -> run();    % `erl bbhw.erl [countdown]`
+main()    -> main([]).             % `erl -noshell -s bbhw main [countdown] -s init stop`
+main([])  -> run();                % `escript bbhw.erl [countdown]`
+                                   % when countdown is not supplied.
 
-main(Arg) when is_integer(Arg) -> 
+main(Arg) when is_integer(Arg) ->  % `bbhw:main(<nnn>)` from shell.
   case isItGood(Arg) of
     true  -> run(Arg);
     false -> isBadArg(Arg)
@@ -13,7 +14,7 @@ main(Arg) when is_integer(Arg) ->
 main(Arg) ->
   Is_string = io_lib:printable_list(Arg),
   Is_list   = is_list(Arg),    
-  Is_atom   = is_atom(Arg),    % `erl -noshell` args come in as atoms.
+  Is_atom   = is_atom(Arg),        % `erl -noshell` args come in as atoms.
   
   if 
     Is_string -> 
@@ -22,7 +23,7 @@ main(Arg) ->
         C     -> run(C)
       end;
       
-    Is_list -> main(hd(Arg));  % true for `Is_string`.
+    Is_list -> main(hd(Arg));      % true for `Is_string`.
     Is_atom -> main(atom_to_list(Arg));
     true    -> isBadArg(Arg)
   end.
