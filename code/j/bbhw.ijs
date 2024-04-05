@@ -7,15 +7,13 @@ Note''
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 )
 main =: 3 : 0
-  count =. ''
   input =. >2{ARGV,a:
-  while. 0=#count do.
-    input =. {{ 1!:1(1) [ 1!:2&4 'countdown: '
-      }} ^: {{ 0=#y }} input  NB. local mutation!
-    count =. ". input         NB. local mutation!
-    input {{ 1!:2&2 'Invalid countdown ', x ,', try again...'
+  whilst. 0=#count do.
+    count =. ". input =. {{ 1!:1(1) [ 1!:2&4 'countdown: ' NB. local mutation!
+      }} ^: (0=#) input
+    input {{ 1!:2&2 'Invalid countdown ',x,', try again...'
       }} ^: {{ 0=#y [ x }} count
-    input =. ''               NB. local mutation!
+    input =. '' NB. local mutation!
   end.
   1!:2&4 'World, Hello...'
   {{ usleep 1000000 [ 1!:2&4 (":y),'...' }} &.> (- i.)count
