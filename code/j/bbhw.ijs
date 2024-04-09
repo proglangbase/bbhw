@@ -20,7 +20,6 @@ main =: 3 : 0
   1!:2&4 'World, Hello...'
   ([:usleep 1e6 [ [:1!:2&4 '...',~ ":) &.> (- i.)count
     NB. TODO: ^ ### FLUSH NEEDED ON macOS BUT NOT ON Windows
-    NB. note usleep breaks loop if within train instead of dd
   'Bye Bye.'
 )
 9!:29(1) [ 9!:27 'main ARGV'
