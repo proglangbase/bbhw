@@ -6,7 +6,7 @@ Note''
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-    Special thanks to Adám Brudzedsky, tangentstorm, and twobular
+    Special thanks to Adám Brudzewsky, tangentstorm, and twobular
     for their fixes and improvements.
 )
 main =: 3 : 0
