@@ -10,8 +10,16 @@ case $(uname) in
   Darwin) # NOTE: this may not work or be necessary with newer macOS due to its SIP
     JCONSOLE="/Applications/j9.5/bin/jconsole"
     ;;
+  Linux) # GNU/Linux or WSL
+    UNAMER="$(uname -r)"
+    if [ "$UNAMER" != "${UNAMER%Microsoft}" ]; then
+      # assume j9.5_win64.zip has been unzipped here
+      JCONSOLE=./j9.5/bin/jconsole.exe
+      chmod 755 $JCONSOLE
+    fi
+    ;;
   *) # assume POSIX
-    JCONSOLE=$(which JCONSOLE)
+    JCONSOLE=$(which jconsole)
     ;;
 esac
 if [ ! -f $JCONSOLE ]; then
