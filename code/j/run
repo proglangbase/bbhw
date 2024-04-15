@@ -6,22 +6,39 @@
 #   License, v. 2.0. If a copy of the MPL was not distributed with this
 #   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #
-case $(uname) in
-  Darwin) # NOTE: this may not work or be necessary with newer macOS due to its SIP
-    JCONSOLE="/Applications/j9.5/bin/jconsole"
-    ;;
-  Linux) # GNU/Linux or WSL
-    UNAMER="$(uname -r)"
-    if [ "$UNAMER" != "${UNAMER%Microsoft}" ]; then
-      # assume j9.5_win64.zip has been unzipped here
-      JCONSOLE=./j9.5/bin/jconsole.exe
-      chmod 755 $JCONSOLE
-    fi
-    ;;
-  *) # assume POSIX
-    JCONSOLE=$(which jconsole)
-    ;;
-esac
+J_VERSION="j9.5"
+PATH_BIN="$J_VERSION/bin"
+UNAMER="$(uname -r)"
+if [ "$UNAMER" != "${UNAMER%Microsoft}" ]; then # WSL
+  EXT_BIN=".exe"
+fi
+FILE_BIN="jconsole"$EXT_BIN
+JCONSOLE=$PATH_BIN/$FILE_BIN
+if [ ! -f $JCONSOLE ]; then # attempt download and install jsoftware release
+  case $(uname) in
+    Darwin) # NOTE: this may not work or be necessary with newer macOS due to its SIP
+      FILE_INSTALL_SUFFIX="mac64.zip"
+      FILE_INSTALL_EXPAND="unzip"
+      ;;
+    Linux) # GNU/Linux or WSL
+      UNAMER="$(uname -r)"
+      if [ "$UNAMER" != "${UNAMER%Microsoft}" ]; then # WSL
+        FILE_INSTALL_SUFFIX="win64.zip"
+        FILE_INSTALL_EXPAND="unzip"
+      else
+        FILE_INSTALL_SUFFIX="linux64.tar.gz"
+        FILE_INSTALL_EXPAND="tar xvzf "
+      fi
+      ;;
+    *) # NOT handling any other platform
+      echo "Will not auto-install because uname $(uname) is not yet handled."
+      ;;
+  esac
+  FILE_INSTALL=$J_VERSION"_"$FILE_INSTALL_SUFFIX
+  wget "https://www.jsoftware.com/download/$J_VERSION/install/"$FILE_INSTALL
+  $FILE_INSTALL_EXPAND $FILE_INSTALL
+  chmod 755 $PATH_BIN/$FILE_BIN
+fi
 if [ ! -f $JCONSOLE ]; then
   echo "J must be installed, which can be obtained at"
   echo "https://code.jsoftware.com/wiki/System/Installation"
