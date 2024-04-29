@@ -1,23 +1,25 @@
-#!/usr/bin/env j
+#!/usr/bin/env jconsole
 Note''
     Copyright © 2024 Christopher Augustus
 
     This Source Code Form is subject to the terms of the Mozilla Public
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+    Special thanks to Adám Brudzewsky, tangentstorm, and twobular
+    for their fixes and improvements.
 )
-main=:3 :0
-  co=:''
-  in=:>2{ARGV,<''
-  while.0=#co do.
-    {{in=:1!:1[1[1!:2&4'countdown: '}}^:(0&=)#in
-    {{in=:''[1!:2&2'Invalid countdown ',":y,', try again...'}}^:{{0=(#co=:".y)}}in
+main =: 3 : 0
+  input =. >{.2}.y
+  isnum =: 0&<: *. <&_ *. (=<.) *. 1=#
+  whilst. -. isnum count do.
+    count =. _ ". input =. (1!:1@1 [ 1!:2&4@'countdown: ')^:(0=#) input NB. local mutation!
+    1!:2&2 ^:(-. isnum count) 'Invalid countdown ',input,', try again...'
+    input =. '' NB. local mutation!
   end.
-  1!:2&4'World, Hello...'
-  {{usleep 1000000[1!:2&4(>":y),'...'}}each|.1+i.co
+  1!:2&4 'World, Hello...'
+  ([:usleep 1e6 [ [:1!:2&4 '...',~ ":) &.> (- i.)count
     NB. TODO: ^ ### FLUSH NEEDED ON macOS BUT NOT ON Windows
-  0 0$1!:2&2'Bye Bye.'
+  'Bye Bye.'
 )
-9!:29(1)[9!:27'main _'
-NB. ^ help from tangentstorm and
-NB. https://code.jsoftware.com/wiki/Vocabulary/Foreigns#m9
+9!:29(1) [ 9!:27 'main ARGV'

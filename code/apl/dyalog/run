@@ -13,4 +13,4 @@ if [ "$DYALOG" = "" ]; then
     echo "https://dyalog.com/download-zone.htm"
     exit 1
 fi
-$DYALOG bbhw-balanced.apls $@
+$DYALOG bbhw.apls $@
