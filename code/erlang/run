@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+ESCRIPT="$(which escript)"
+if [ -z "$ESCRIPT" ]; then
+    PATH_HERE=$(pwd)/$(dirname $0)
+    PATH_TOOL="$PATH_HERE/.erlang"
+    ESCRIPT="$PATH_TOOL/bin/escript"
+    if [ ! -e "$ESCRIPT" ]; then
+	while [ 1 ]; do
+	    echo "Erlang/OTP is not installed."
+	    read -p "Do you want to install a local copy (y/N)? " -n1
+	    [ -n "$REPLY" ] && echo
+	    case "${REPLY^^}" in
+		Y) break 2;;
+		N) exit 1;;
+	    esac
+	done
+        [ -z "$(which gcc)" ]  && { echo "'gcc' command not found";  MISSING="Y"; }
+        [ -z "$(which make)" ] && { echo "'make' command not found"; MISSING="Y"; }
+        if [ -n "$MISSING" ]; then
+	    echo "Please install the missing command(s) and try again."
+	    exit 1
+	fi
+        rm -fr "$PATH_TOOL"
+        git clone git@github.com:erlang/otp "$PATH_TOOL"	
+	cd "$PATH_TOOL"
+	./configure --without-javac --without-termcap
+	[ ! -e "$ESCRIPT" ] && exit 1
+	cd "$PATH_HERE"
+    fi
+fi
+$ESCRIPT bbhw.erl $@ 
+
