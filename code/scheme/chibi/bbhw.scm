@@ -7,7 +7,6 @@
 ;;;
 (import (scheme small) ;;; required for command-line, define, display
         (srfi 18))     ;;; required for thread-sleep!
-
 (define count #f)
 (define input (cadr (append (command-line) (list ""))))
 (do () (count)
@@ -18,10 +17,8 @@
     (if (or (not (integer? count)) (< count 0))
         (begin (display (string-append "Invalid countdown " input ", try again...\n"))
                (set! count #f)
-               (set! input "")))
-)
-(display "World, Hello...")
-(flush-output-port)
+               (set! input ""))))
+(display "World, Hello...") (flush-output-port)
 (do ((i count (- i 1))) ((zero? i))
     (begin (display (string-append (number->string i) "...")))
            (flush-output-port)
