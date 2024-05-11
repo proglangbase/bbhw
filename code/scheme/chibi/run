@@ -1,0 +1,32 @@
+#!/bin/sh
+#
+#   Copyright © 2024 Christopher Augustus
+#
+#   This Source Code Form is subject to the terms of the Mozilla Public
+#   License, v. 2.0. If a copy of the MPL was not distributed with this
+#   file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+CHIBI=$(which chibi-scheme)
+if [ "$CHIBI" = "" ]; then
+  PATH_HERE=$(pwd)/$(dirname $0)
+  PATH_REPO="$PATH_HERE/chibi-scheme"
+  CHIBI="$PATH_REPO/chibi-scheme"
+  if [ ! -f $CHIBI ]; then
+    if [ ! -d $PATH_REPO ]; then
+      git clone -v git@github.com:ashinn/chibi-scheme
+    fi
+    cd $PATH_REPO
+    git checkout 0.10
+    make PREFIX=$PATH_REPO install
+    cd $PATH_HERE
+  fi
+  case $(uname) in
+    Darwin) # NOTE: this may not work or be necessary with newer macOS due to its SIP
+      export DYLD_LIBRARY_PATH=:$PATH_REPO/lib:$DYLD_LIBRARY_PATH
+      ;;
+    *) # assume POSIX
+      export LD_LIBRARY_PATH=:$PATH_REPO/lib:$LD_LIBRARY_PATH
+      ;;
+  esac
+fi
+$CHIBI -I $PATH_REPO/lib bbhw.scm "$@"
