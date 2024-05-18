@@ -1,0 +1,29 @@
+#!/bin/sh -e
+PATH_HERE=$(pwd)/$(dirname "$0")
+
+FACTOR=$(which factor)
+# This is usually an irrelevant prime factors tool that we ignore:
+if [ -x "$FACTOR" ]; then
+  if $FACTOR --help 2>&1 | grep -q 'prime factors'; then
+    FACTOR=""
+  fi
+fi
+
+# If not found, build Factor from source:
+if [ "$FACTOR" = "" ]; then
+  PATH_REPO="$PATH_HERE/factor"
+  FACTOR="$PATH_REPO/factor"
+
+  if [ ! -x "$FACTOR" ]; then
+    if [ ! -d "$PATH_REPO" ]; then
+      git clone -v --depth=1 git@github.com:factor/factor
+    fi
+    cd "$PATH_REPO"
+    git checkout master
+    git pull
+    ./build.sh net-bootstrap
+  fi
+fi
+
+# Use the fast, non-optimizing compiler to run bbhw:
+$FACTOR "$PATH_HERE/bbhw/bbhw.factor" "$@"
