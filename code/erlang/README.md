@@ -9,7 +9,7 @@ This Erlang script has been tested under Windows and [WSL2] running [Ubuntu].
 ## Installing the OTP
 
 Under Linux, the `run` command will optionally install a local copy of the OTP, if a global one is not
-found, before running the Erlang script. This takes a while, however, and is not guaranteed to complete.
+found, before running the Erlang script. It takes about 10 minutes to install.
 
 There is no command to run the script under Windows and [Installing the OTP] globally is the best 
 option for Windows and Linux. 
