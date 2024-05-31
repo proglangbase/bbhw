@@ -22,4 +22,4 @@ if [ "$GAMBIT" = "" ]; then
     cd $PATH_HERE
   fi
 fi
-$GAMBIT bbhw.scm "$@"
+$GAMBIT bbhw-sub.scm "$@"
