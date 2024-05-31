@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 . "$(dirname $0)/setenv" || exit 1
-escript bbhw.erl $@ 
+elixir bbhw.exs $@ 
+

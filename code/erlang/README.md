@@ -27,9 +27,18 @@ option for Windows and Linux.
 ```sh
 run [countdown]
 ```
-Executes `bbhw.erl` in the [scripting engine][escript]. Optionally downloads and builds a local copy 
-of the OTP if it's not installed, globally.
+Executes `bbhw.erl` in the [scripting engine][escript]. Optionally downloads 
+and builds a local copy of the OTP, if it's not installed globally
   
+### `setenv` Command - Linux only
+
+```sh
+source setenv
+```
+Optionally downloads and builds a local copy of the OTP, if it's not installed 
+globally, and adds the OTP runtime commands to `PATH`.
+
+**Run this command if the commands below can't be found.**
 
 ### Erlang Scripting Engine
 
@@ -45,7 +54,6 @@ c(bbhw).
 bbhw:main([countdown]).
 ```
 Compiles and executes `bbhw.erl` in the Erlang shell.
-
 
 ### Command Line
 
