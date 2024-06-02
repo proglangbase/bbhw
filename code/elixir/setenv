@@ -1,55 +1,55 @@
 #!/usr/bin/env bash
 if [ -z "$(which erlc)" ]; then
-    PATH_HERE=$(pwd)/$(dirname ${BASH_SOURCE[0]})
-    PATH_TOOL="$PATH_HERE/.erlang"
-    PATH_CMDS="$PATH_TOOL/bin"
-    if [ ! -e "$PATH_CMDS/erlc" ]; then
-        while [ 1 ]; do
-            echo "Erlang/OTP is required but not installed."
-            read -p "Do you want to install a copy (y/N)? " -n1
-            [ -n "$REPLY" ] && echo
-            case "${REPLY^^}" in
-             Y) break 2;;
-             N) return 1;;
-            '') return 1;;
-            esac
-        done
-        [ -z "$(which gcc)" ]  && { echo "'gcc' command not found";  MISSING="Y"; }
-        [ -z "$(which make)" ] && { echo "'make' command not found"; MISSING="Y"; }
-        if [ -n "$MISSING" ]; then
-            echo "Please install the missing command(s) and try again."
-            return 1
-        fi
-        rm -fr "$PATH_TOOL"
-        git clone --depth 1 --branch OTP-26.1.1 git@github.com:erlang/otp "$PATH_TOOL"	
-        cd "$PATH_TOOL"
-        ./configure --without-javac --without-termcap
-        make
-        cd "$PATH_HERE"
+  PATH_HERE=$(pwd)/$(dirname ${BASH_SOURCE[0]})
+  PATH_TOOL="$PATH_HERE/.erlang"
+  PATH_CMDS="$PATH_TOOL/bin"
+  if [ ! -e "$PATH_CMDS/erlc" ]; then
+    while [ 1 ]; do
+      echo "Erlang/OTP is required but not installed."
+      read -p "Do you want to install a copy (y/N)? " -n1
+      [ -n "$REPLY" ] && echo
+      case "${REPLY^^}" in
+        Y) break 2;;
+        N) return 1;;
+       '') return 1;;
+      esac
+    done
+    [ -z "$(which gcc)" ]  && { echo "'gcc' command not found";  MISSING="Y"; }
+    [ -z "$(which make)" ] && { echo "'make' command not found"; MISSING="Y"; }
+    if [ -n "$MISSING" ]; then
+      echo "Please install the missing command(s) and try again."
+      return 1
     fi
-    export PATH="$PATH:$PATH_CMDS"
+    rm -fr "$PATH_TOOL"
+    git clone --depth 1 --branch OTP-26.1.1 git@github.com:erlang/otp "$PATH_TOOL"	
+    cd "$PATH_TOOL"
+    ./configure --without-javac --without-termcap
+    make
+    cd "$PATH_HERE"
+  fi
+  export PATH="$PATH:$PATH_CMDS"
 fi
 
 if [ -z "$(which elixir)" ]; then
-    PATH_HERE=$(pwd)/$(dirname ${BASH_SOURCE[0]})
-    PATH_TOOL="$PATH_HERE/.elixir"
-    PATH_CMDS="$PATH_TOOL/bin"
-    if [ ! -e "$PATH_CMDS/elixir" ]; then
-        while [ 1 ]; do
-            echo "Elixir is required but not installed."
-            read -p "Do you want to install a copy (y/N)? " -n1
-            [ -n "$REPLY" ] && echo
-            case "${REPLY^^}" in
-             Y) break 2;;
-             N) return 1;;
-            '') return 1;;
-            esac
-        done
-        rm -fr "$PATH_TOOL"
-        git clone --depth 1 --branch v1.16.2 git@github.com:elixir-lang/elixir "$PATH_TOOL"	
-        cd "$PATH_TOOL"
-        make
-        cd "$PATH_HERE"
-    fi
-    export PATH="$PATH:$PATH_CMDS"
+  PATH_HERE=$(pwd)/$(dirname ${BASH_SOURCE[0]})
+  PATH_TOOL="$PATH_HERE/.elixir"
+  PATH_CMDS="$PATH_TOOL/bin"
+  if [ ! -e "$PATH_CMDS/elixir" ]; then
+    while [ 1 ]; do
+      echo "Elixir is required but not installed."
+      read -p "Do you want to install a copy (y/N)? " -n1
+      [ -n "$REPLY" ] && echo
+      case "${REPLY^^}" in
+        Y) break 2;;
+        N) return 1;;
+       '') return 1;;
+      esac
+    done
+    rm -fr "$PATH_TOOL"
+    git clone --depth 1 --branch v1.16.2 git@github.com:elixir-lang/elixir "$PATH_TOOL"	
+    cd "$PATH_TOOL"
+    make
+    cd "$PATH_HERE"
+  fi
+  export PATH="$PATH:$PATH_CMDS"
 fi
