@@ -8,7 +8,7 @@
 
 : get-count ( -- d )
   next-arg 2dup d0= if 2drop ask then
-  begin 2dup s>number? 0= >r 2dup d0< r> or while
+  begin #0. 2over >number nip while
     2drop ." Invalid input " type ." . " ask
   repeat 2nip ;
 
