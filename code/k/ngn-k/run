@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+#   Copyright © 2024 Christopher Augustus
+#
+#   This Source Code Form is subject to the terms of the Mozilla Public
+#   License, v. 2.0. If a copy of the MPL was not distributed with this
+#   file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+NGN_K=$(which k)
+if [ "$NGN_K" = "" ]; then
+  PATH_HERE=$(pwd)/$(dirname $0)
+  PATH_REPO="$PATH_HERE/ngn-k"
+  NGN_K="$PATH_REPO/k"
+  if [ ! -f $NGN_K ]; then
+    if [ ! -d $PATH_REPO ]; then
+      git clone -v git@gitlab.com:aboa/ngn-k
+    fi
+    cd $PATH_REPO
+    git checkout aboa-stable
+    make
+    cd $PATH_HERE
+  fi
+fi
+$NGN_K bbhw.k $@
