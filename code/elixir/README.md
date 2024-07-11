@@ -1,7 +1,7 @@
 # Elixir
 
 [Elixir] is a [Functional Programming] language created in 2012, by Jos&#233; 
-Valim (pronounced "Jo-zay"), to bring the concurrancy power and distributed 
+Valim (pronounced "Zho-zay"), to bring the concurrancy power and distributed 
 architecture of [Erlang] to web application development. The language syntax is
 based on [Ruby], an object-oriented programming language most noted for it's use
 with the [Rails] web development framework.

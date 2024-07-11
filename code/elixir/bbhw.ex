@@ -22,8 +22,8 @@ defmodule BBHW do
   defp getCountdown(s) do
     case Integer.parse(s) do
       {i, ""} -> case isItGood i do
-        :true -> i
-        _     -> isNotGood(i)
+        true -> i
+        _   -> isNotGood(i)
       end
       _ -> isNotGood(s)
     end
@@ -68,3 +68,4 @@ defmodule BBHW do
     rundown(count-1)
   end
 end
+
