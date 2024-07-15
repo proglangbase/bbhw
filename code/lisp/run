@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+. "$(dirname $0)/setenv" || exit 1
+clisp bbhw.lisp $@ 
+
