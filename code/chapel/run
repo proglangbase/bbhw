@@ -1,0 +1,8 @@
+#! /bin/bash
+if ! which -s chpl ; then
+  ./get
+  . chapel-*/util/quickstart/setchplenv.bash
+fi
+if chpl bbhw.chpl ; then
+  ./bbhw "$@"
+fi
