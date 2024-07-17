@@ -5,6 +5,6 @@ if ! which -s chpl ; then
   fi
   . chapel-*/util/quickstart/setchplenv.bash
 fi
-if chpl bbhw.chpl ; then
+if [ bbhw.chpl -ot bbhw ] || chpl bbhw.chpl ; then
   ./bbhw "$@"
 fi
