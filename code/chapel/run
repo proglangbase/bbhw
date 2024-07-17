@@ -1,6 +1,8 @@
 #! /bin/bash
 if ! which -s chpl ; then
-  ./get
+  if ! [ -f chapel-*/util/quickstart/setchplenv.bash ] ; then
+    ./get
+  fi
   . chapel-*/util/quickstart/setchplenv.bash
 fi
 if chpl bbhw.chpl ; then
