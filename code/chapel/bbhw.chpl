@@ -4,33 +4,26 @@ use IO;		// stdout, BadFormatError
 use Time;	// sleep
 use ArgumentParser;
 
+proc parsecount(s: string) {
+    try {
+      count = s : uint : int;
+    } catch {
+      writef("Bad count %\"S.\n", s.strip());
+    }
+}
 proc main(args:[]string) throws {
-  const badCount = "Bad count %\"S.\n";
   var parser = new argumentParser();
   var arg = parser.addArgument(name="count", numArgs=0..1);
   parser.parseArgs(args);
   if (count<0 && arg.hasValue()) {
-    var s = arg.value();
-    try {
-      count = s : uint : int;
-    } catch e:IllegalArgumentError {
-      writef(badCount, s);
-    }
+    parsecount(arg.value());
   }
   while (count<0) {
     write("Count? ");
     stdout.flush();
-    try! {
-      // Note: readf will accept leading whitespace including newlines.
-      if (!readf("%u\n", count)) {
-        exit();	// Happens for EOF.
-      }
-    } catch e:BadFormatError {
-      var s:string;
-      readln(s);	// stdin reverted failed read
-      writef(badCount, s);
-      count = -1;	// 12foo != 12. %u may have worked but \n failed.
-    }
+    var s : string;
+    if (!readLine(s)) { exit(); /* EOF */ }
+    parsecount(s);
   }
   write("World, Hello...");
   for i in 1..count by -1 do {
