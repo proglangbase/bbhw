@@ -1,0 +1,8 @@
+#!/bin/sh
+GUILE=$(which guile)
+if [ "$GUILE" = "" ]; then
+    PATH_HERE=$(pwd)/$(dirname $0)
+    PATH_REPO="$PATH_HERE/guile"
+    echo "TODO: install guile to $PATH_REPO"
+fi
+$GUILE --no-auto-compile --r7rs bbhw.scm "$@"
