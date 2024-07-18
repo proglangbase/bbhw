@@ -4,18 +4,21 @@
         (srfi 18))
 
 (define count
-  (do ((input (cadr (append (command-line) (list "")))
-              (begin
-                (write-string "countdown: ")
-                (read-line))))
-      ((let ((count (string->number input)))
-         (and (integer? count) (>= count 0)))
-       (string->number input))
-    (unless (string=? input "")
-      (write-string "Invalid countdown ")
-      (write-string input)
-      (write-string ", try again...")
-      (newline))))
+  (let get-count ((input (cdr (command-line))))
+    (cond ((and (integer? input) (>= input 0)) input)
+          ((and (string? input) (string->number input)) => get-count)
+          ((pair? input) (get-count (car input)))
+          ((null? input) (get-count #f))
+          ((and (string? input) (string=? "" input)) (get-count #f))
+          (else
+           (if input
+               (begin
+                 (write-string "Invalid countdown ")
+                 (display input)
+                 (write-string ", try again...")
+                 (newline)))
+           (write-string "countdown: ")
+           (get-count (read-line))))))
 
 (write-string "World, Hello...") (flush-output-port)
 (do ((i count (- i 1)))
