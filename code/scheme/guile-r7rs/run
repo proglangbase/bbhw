@@ -1,8 +1,14 @@
 #!/bin/sh
 GUILE=$(which guile)
 if [ "$GUILE" = "" ]; then
-    PATH_HERE=$(pwd)/$(dirname $0)
-    PATH_REPO="$PATH_HERE/guile"
-    echo "TODO: install guile to $PATH_REPO"
+    case $(uname) in
+        Darwin)
+            echo "Install guile, see e.g. https://formulae.brew.sh/formula/guile"
+            ;;
+        *)
+            echo "Install guile on your system, see https://www.gnu.org/software/guile/download/"
+            ;;
+    esac
+    exit 1
 fi
 $GUILE --no-auto-compile --r7rs bbhw.scm "$@"
