@@ -10,13 +10,23 @@ Elixir is written in Erlang and requires the [OTP] and Elixir runtime systems
 be installed. This Elixir script has been tested under Windows and [WSL2] 
 running [Ubuntu].
 
-In Windows, the Erlang OTP and Elixir runtime environments [must be installed][winstall] 
-before the Elixir script will execute.
+In Windows, the Erlang OTP and Elixir runtime environments [must be installed][winstall] before the Elixir script will execute.
 
 In Linux, `run` and `setenv` will install a local copy of the runtimes if they
 are not installed, globally.
 
 ## Usage
+
+### Files
+
+- `bbhw.ex` defines the `BBHW` module. It may be compiled with the Elixir shell 
+  `iex` and it's public functions `main()` and `main(arg)` called directly.
+
+- `bbhw.exs` is an Elixir script that imports `bbhw.ex` and passes any command 
+  line arguments to `main(arg)`.
+
+- `bbhw-orig.ex` is the original, much more verbose and segmented, version of
+  the `BBHW` module.   
 
 ### Parameters
 
@@ -33,7 +43,7 @@ Executes `bbhw.exs` in the [scripting engine][elixir]. Calls `setenv` to verify
 the Erlang OTP and Elixir runtimes are installed.
 
 
-### `setver` Command
+### `setenv` Command
 
 Verifies the Erlang OTP and Elixir runtimes are installed and sets `PATH` to
 include the runtime commands. On Linux, a local copy will be installed if not 

@@ -1,60 +1,36 @@
 defmodule BBHW do
 
-  def main(),   do: run()
-  def main([]), do: run()
-  def main(arg) when is_atom(arg), do: isBadArg(arg)
-  def main(arg) when is_list(arg), do: main(hd(arg))
-
-  def main(arg) when is_integer(arg) do
-    case isItGood(arg) do
-      true  -> run(arg)
-      false -> isBadArg(arg)
-    end
-  end
-
-  def main(arg) do
-    case getCountdown arg do
-      :error -> run()
-      count  -> run(count)
-    end
-  end
-
-  defp getCountdown(s) do
-    case Integer.parse(s) do
-      {i, ""} -> case isItGood i do
-        true -> i
-        _   -> isNotGood(i)
-      end
-      _ -> isNotGood(s)
-    end
-  end
-
-  defp isBadArg(arg) do
-    isNotGood(arg)
-    run()
-  end
-
-  defp isItGood(i), do: i >= 0
-
-  defp isNotGood(a) when is_atom(a),   do: isNotGood(to_string(a))
-  defp isNotGood(s) when is_binary(s), do: isNotGood("\"#{s}\"", :print)
-  defp isNotGood(i), do: isNotGood(i, :print)
-  defp isNotGood(v, :print) do
-    IO.puts("Invalid countdown #{v}, try again...")
-    :error
-  end
-
-  defp readInput() do
+  def isBadArg(v), do: IO.puts("Invalid countdown \"#{v}\", try again...")
+  
+  def main() do
     case IO.gets("countdown: ") |> String.trim() do
-      ""   -> readInput()
-      line -> case getCountdown(line) do
-        :error -> readInput()
-        i      -> i
-      end
+      ""   -> main()
+      line -> main(line)
     end
   end
 
-  defp run(), do: run(readInput())   
+  def main(a) when is_atom(a),  do: (isBadArg(a); main())
+  def main(f) when is_float(f), do: (isBadArg(f); main())
+  def main(l) when is_list(l),  do: main(hd(l ++ [""]))
+
+  def main(s) when is_binary(s) do
+    case String.length(s) > 0 do
+      true -> 
+        case Integer.parse(s) do
+          {i, ""} -> main(i)
+          _       -> isBadArg(s); main()
+        end
+      false -> main()
+    end
+  end
+  
+  def main(i) when is_integer(i) do
+    case i >= 0 do
+      true  -> run(i)
+      false -> isBadArg(i); main()
+    end
+  end
+
   defp run(count) do
     IO.write("World, Hello...")
     rundown(count)
