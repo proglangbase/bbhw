@@ -1,7 +1,6 @@
 (import (scheme base)
-        (scheme process-context)
-        (scheme read)
-        (srfi 18))
+        (only (scheme process-context) command-line)
+        (only (srfi 18) current-time time->seconds seconds->time thread-sleep!))
 
 (define count
   (let get-count ((input (cdr (command-line))))
