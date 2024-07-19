@@ -1,21 +1,33 @@
 # Erlang/OTP
 
-[Erlang] is a [Functional Programming] language developed by Ericsson specifically for development of 
-telephony applications. The [OTP] is a set of libraries, written in Erlang, comprising the Erlang
-interpreter, compiler, and runtime shell.
+[Erlang] is a [Functional Programming] language developed by Ericsson specifically 
+for development of telephony applications. The [OTP] is a set of libraries, 
+written in Erlang, comprising the Erlang interpreter, compiler, and runtime shell.
 
 This Erlang script has been tested under Windows and [WSL2] running [Ubuntu].
 
 ## Installing the OTP
 
-Under Linux, the `run` command will optionally install a local copy of the OTP, if a global one is not
-found, before running the Erlang script. It takes about 10 minutes to install.
+Under Linux, the `run` command will optionally install a local copy of the OTP, 
+if a global one is not found, before running the Erlang script. It takes about 
+10 minutes to install.
 
-There is no command to run the script under Windows and [Installing the OTP] globally is the best 
-option for Windows and Linux. 
+There is no command to run the script under Windows and [Installing the OTP] 
+globally is the best option for Windows and Linux. 
 
 
 ## Usage
+
+### Files
+
+- `bbhw.erl` defines the `bbhw` module. It may be compiled with the Erlang shell 
+  `erl` and it's public functions `main()` and `main(arg)` called directly.
+
+- `bbhw.exs` is an Elixir script that imports `bbhw.ex` and passes any command 
+  line arguments to `main(arg)`.
+
+- `bbhw-orig.erl` is the original, much more verbose and segmented, version of
+  the `bbhw` module.   
 
 ### Parameters
 
