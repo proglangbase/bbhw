@@ -1,6 +1,6 @@
 defmodule BBHW do
 
-  def isBadArg(v), do: IO.puts("Invalid countdown \"#{v}\", try again...")
+  defp isBadArg(v), do: IO.puts("Invalid countdown \"#{v}\", try again...")
   
   def main() do
     case IO.gets("countdown: ") |> String.trim() do
