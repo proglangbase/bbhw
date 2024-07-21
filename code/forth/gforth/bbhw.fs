@@ -4,12 +4,12 @@
 \ 84 constant size
 \ size buffer: buf
 
-: ask ( -- c-addr u ) ." Count? " pad dup 84 accept cr ;
+: ask ( -- c-addr u ) ." countdown: " pad dup 84 accept cr ;
 
 : get-count ( -- d )
   next-arg 2dup d0= if 2drop ask then
   begin #0. 2over >number nip while
-    2drop ." Invalid input " type ." . " ask
+    2drop ." Invalid input " type ." , try again..." cr ask
   repeat 2nip ;
 
 : count-down ( u -- )
@@ -17,6 +17,6 @@
   0 swap -do
     i s>d <# s" ..." holds #s #> type 1000 ms
   1 -loop
-  ." Goodbye." cr ;
+  ." Bye Bye." cr ;
 
 get-count d>s count-down bye
