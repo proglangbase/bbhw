@@ -12,9 +12,9 @@
           (else
            (if input
                (begin
-                 (write-string "Invalid countdown ")
+                 (write-string "Invalid countdown \"")
                  (display input)
-                 (write-string ", try again...")
+                 (write-string "\", try again...")
                  (newline)))
            (write-string "countdown: ")
            (get-count (read-line))))))
