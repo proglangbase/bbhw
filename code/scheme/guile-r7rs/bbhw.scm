@@ -8,7 +8,6 @@
           ((and (string? input) (string->number input)) => get-count)
           ((pair? input) (get-count (car input)))
           ((null? input) (get-count #f))
-          ((and (string? input) (string=? "" input)) (get-count #f))
           (else
            (if input
                (begin
