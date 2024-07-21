@@ -19,8 +19,8 @@
   [count (getcount (fold-left
            (lambda (a x) (if (string=? a "") x (string-append a " " x)))
            "" (cdr (command-line))))])
-    (display "World, Hello...") (flush-output-port)
-    (do ((i count (- i 1))) ((zero? i))
-        (display (format "~a..." i)) (flush-output-port)
-        (sleep (make-time 'time-duration 0 1)))
-    (display "Bye Bye.\n"))
+  (display "World, Hello...") (flush-output-port)
+  (do ((i count (- i 1))) ((zero? i))
+    (display (format "~a..." i)) (flush-output-port)
+    (sleep (make-time 'time-duration 0 1)))
+  (display "Bye Bye.\n"))
