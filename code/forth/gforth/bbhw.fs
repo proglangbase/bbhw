@@ -15,7 +15,7 @@
 : count-down ( u -- )
   ." World, Hello..."
   0 swap -do
-    i s>d <# s" ..." holds #s #> type 1000 ms
+    i s>d <# #s #> type ." ..." 1000 ms
   1 -loop
   ." Bye Bye." cr ;
 
