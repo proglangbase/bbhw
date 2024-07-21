@@ -9,8 +9,8 @@
 (import (srfi 1 )  ; fold
         (srfi 31)  ; rec
         (srfi 48)) ; format
-(letrec* (
-  (getcount (lambda (arginput)
+(let ((count
+  ((rec (f arginput)
     (let* ((input (if (string=? arginput "")
                       (begin (display "countdown: ")
                              (read-line))
@@ -19,10 +19,9 @@
       (if (and (integer? count) (>= count 0))
           count
           (begin (display (format "Invalid countdown ~s, try again...\n" input))
-                 (getcount ""))))))
-  (count (getcount (fold
-           (lambda (x a) (if (string=? a "") x (string-append a " " x)))
-           "" (cdr (command-line))))))
+                 (f "")))))
+   (fold (lambda (x a) (if (string=? a "") x (string-append a " " x)))
+         "" (cdr (command-line))))))
   (display "World, Hello...") (flush-output-port)
   (do ((i count (- i 1))) ((zero? i))
     (display (format "~a..." i)) (flush-output-port) (thread-sleep! 1))
