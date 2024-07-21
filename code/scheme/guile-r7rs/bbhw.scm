@@ -1,6 +1,6 @@
 (import (scheme base)
         (only (scheme process-context) command-line)
-        (only (srfi 18) current-time time->seconds seconds->time thread-sleep!))
+        (only (srfi 18) thread-sleep!))
 
 (define count
   (let get-count ((input (cdr (command-line))))
@@ -23,5 +23,5 @@
 (do ((i count (- i 1)))
     ((zero? i))
   (display i) (write-string "...") (flush-output-port)
-  (thread-sleep! (seconds->time (+ (time->seconds (current-time)) 1))))
+  (thread-sleep! 1))
 (write-string "Bye Bye.") (newline)
