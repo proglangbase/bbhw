@@ -1,0 +1,11 @@
+#! /bin/sh -e
+# https://gforth.org/
+VER=0.7.3
+PREFIX="$PWD/gforth"
+wget -c https://ftp.gnu.org/gnu/gforth/gforth-$VER.tar.gz
+tar xzf gforth-$VER.tar.gz
+cd gforth-$VER
+./configure --prefix="$PREFIX"
+make
+make install
+
