@@ -1,0 +1,5 @@
+#! /bin/sh
+#pforth=pforth-2.0.1/fth/pforth_standalone
+pforth=pforth-2.0.1/platforms/unix/pforth_standalone
+[ -x $pforth ] || ./get
+$pforth -q bbhw.fs
