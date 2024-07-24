@@ -1,14 +1,59 @@
 #!/bin/sh
 GUILE=$(which guile)
 if [ "$GUILE" = "" ]; then
-    case $(uname) in
-        Darwin)
-            echo "Install guile, see e.g. https://formulae.brew.sh/formula/guile"
-            ;;
-        *)
-            echo "Install guile on your system, see https://www.gnu.org/software/guile/download/"
-            ;;
-    esac
-    exit 1
+  PATH_HERE=$(pwd)/$(dirname $0)
+  PATH_BUILD="$PATH_HERE/build"
+  PATH_INSTALL="$PATH_HERE/guile"
+  GUILE="$PATH_INSTALL/bin/guile"
+  if [ ! -f $GUILE ]; then
+    mkdir -p "$PATH_BUILD"
+    pushd "$PATH_BUILD"
+
+    # Guile dependency pkg-config
+    curl -s https://pkg-config.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | tar zxvf -
+    pushd pkg-config-0.29.2
+    ./configure --prefix="$PATH_INSTALL" --disable-debug --disable-docs
+    make -j4
+    make install
+    popd
+
+    # Guile dependency bdw-gc
+    curl -s https://www.hboehm.info/gc/gc_source/gc-8.2.4.tar.gz | tar zxvf -
+    pushd gc-8.2.4
+    ./configure --prefix="$PATH_INSTALL" --disable-debug --disable-docs
+    make -j4
+    make install
+    popd
+
+    # Guile dependency libunistring
+    curl -s https://ftp.gnu.org/gnu/libunistring/libunistring-1.2.tar.gz | tar zxvf -
+    pushd libunistring-1.2
+    ./configure --prefix="$PATH_INSTALL" --disable-debug --disable-docs
+    make -j4
+    make install
+    popd
+
+    # Guile dependency libffi
+    curl -sL https://github.com/libffi/libffi/releases/download/v3.4.6/libffi-3.4.6.tar.gz | tar zxvf -
+    pushd libffi-3.4.6
+    ./configure --prefix="$PATH_INSTALL" --disable-debug --disable-docs
+    make -j4
+    make install
+    popd
+
+    # Guile itself
+    curl -s https://ftp.gnu.org/gnu/guile/guile-3.0.10.tar.gz | tar zxvf -
+    pushd guile-3.0.10
+    PKG_CONFIG="$PATH_INSTALL/bin/pkg-config" PKG_CONFIG_LIBDIR="$PATH_INSTALL/lib/pkgconfig" ./configure \
+      --prefix="$PATH_INSTALL" \
+      --with-bdw-gc="$PATH_INSTALL"/lib/pkgconfig/bdw-gc.pc \
+      --with-libunistring-prefix="$PATH_INSTALL" \
+      --enable-mini-gmp
+    make -j4
+    make install
+    popd
+
+    popd
+  fi
 fi
 $GUILE --no-auto-compile --r7rs bbhw.scm "$@"
