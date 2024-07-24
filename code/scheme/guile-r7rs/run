@@ -9,23 +9,7 @@ if [ "$GUILE" = "" ]; then
     mkdir -p "$PATH_BUILD"
     pushd "$PATH_BUILD"
 
-    # Guile dependency pkg-config
-    curl -s https://pkg-config.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | tar zxvf -
-    pushd pkg-config-0.29.2
-    ./configure --prefix="$PATH_INSTALL" --disable-debug --disable-docs
-    make -j4
-    make install
-    popd
-
-    # Guile dependency bdw-gc
-    curl -s https://www.hboehm.info/gc/gc_source/gc-8.2.4.tar.gz | tar zxvf -
-    pushd gc-8.2.4
-    ./configure --prefix="$PATH_INSTALL" --disable-debug --disable-docs
-    make -j4
-    make install
-    popd
-
-    # Guile dependency libunistring
+    # libunistring: gettext and Guile dependency
     curl -s https://ftp.gnu.org/gnu/libunistring/libunistring-1.2.tar.gz | tar zxvf -
     pushd libunistring-1.2
     ./configure --prefix="$PATH_INSTALL" --disable-debug --disable-docs
@@ -33,7 +17,46 @@ if [ "$GUILE" = "" ]; then
     make install
     popd
 
-    # Guile dependency libffi
+    # gettext: pkg-config and Guile dependency
+    curl -s https://ftp.gnu.org/pub/gnu/gettext/gettext-0.22.5.tar.gz | tar zxvf -
+    pushd gettext-0.22.5
+    ./configure --prefix="$PATH_INSTALL" \
+                --with-included-glib \
+                --with-included-libxml \
+                --disable-java \
+                --disable-csharp \
+                --without-git \
+                --without-cvs \
+                --without-xz \
+                --disable-debug \
+                --disable-docs
+    make -j4
+    make install
+    popd
+
+    # pkg-config: Guile dependency
+    curl -s https://pkg-config.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | tar zxvf -
+    pushd pkg-config-0.29.2
+    # See https://gitlab.freedesktop.org/pkg-config/pkg-config/-/issues/81
+    CFLAGS="-Wno-int-conversion" CXXFLAGS="-Wno-int-conversion" ./configure \
+          --prefix="$PATH_INSTALL" \
+          --with-internal-glib \
+          --disable-host-tool \
+          --disable-debug \
+          --disable-docs
+    make -j4
+    make install
+    popd
+
+    # bdw-gc: Guile dependency
+    curl -s https://www.hboehm.info/gc/gc_source/gc-8.2.4.tar.gz | tar zxvf -
+    pushd gc-8.2.4
+    ./configure --prefix="$PATH_INSTALL" --disable-debug --disable-docs
+    make -j4
+    make install
+    popd
+
+    # libffi: Guile dependency
     curl -sL https://github.com/libffi/libffi/releases/download/v3.4.6/libffi-3.4.6.tar.gz | tar zxvf -
     pushd libffi-3.4.6
     ./configure --prefix="$PATH_INSTALL" --disable-debug --disable-docs
