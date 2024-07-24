@@ -13,7 +13,7 @@ proc main(args:[]string) {
   const arg = parser.addArgument(name="count", numArgs=0..1);
   parser.parseArgs(args);
   if count<0 && arg.hasValue() then parsecount(arg.value());
-  while (count<0) {
+  while count<0 {
     write("countdown: ");
     stdout.flush();
     var s : string;
