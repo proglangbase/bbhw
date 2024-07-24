@@ -1,9 +1,9 @@
 #! /bin/bash
-if ! which -s chpl ; then
+if ! which chpl >& /dev/null ; then
   if ! [ -f chapel-*/util/quickstart/setchplenv.bash ] ; then
     ./get
   fi
-  . chapel-*/util/quickstart/setchplenv.bash
+  . chapel-*/util/quickstart/setchplenv.bash >& /dev/null
 fi
 if [ bbhw.chpl -ot bbhw ] || chpl bbhw.chpl ; then
   ./bbhw "$@"
