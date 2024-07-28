@@ -1,6 +1,6 @@
-#! /bin/sh -e
+#! /bin/bash -e
 # https://gforth.org/
-if ! which -s gforth ; then
+if ! type gforth >& /dev/null ; then
   if ! [ -x gforth/bin/gforth ] ; then
     ./get
   fi
