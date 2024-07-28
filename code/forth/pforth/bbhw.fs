@@ -11,16 +11,16 @@
 : count-down ( u -- )
   ." World, Hello..."
   dup if
-  1 swap do
+   1 swap do
     i s>d <# #s #> type ." ..." 1000 ms
-  -1 +loop
-  then
+   -1 +loop
+  else drop then
   ." Bye Bye." cr ;
 
 ( If you load this with "include bbhw.fs" in pforth,
   this word is left defined so you can "bbhw 2" later )
 : bbhw  \ interactive word, accepts argument
-  cr bl word count
+  cr 13 word count
   dup 0= if 2drop ask then
   get-count d>s count-down ;
 
