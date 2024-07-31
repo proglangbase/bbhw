@@ -5,7 +5,7 @@
 
 : get-count ( -- d )
   begin #0. 2over dup if >number nip else 2drop 1 then while
-    2drop ." Invalid input " quote type quote ." , try again..." cr ask
+    2drop ." Invalid countdown " quote type quote ." , try again..." cr ask
   repeat 2nip ;
 
 : count-down ( u -- )
