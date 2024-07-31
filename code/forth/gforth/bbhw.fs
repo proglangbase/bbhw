@@ -9,7 +9,7 @@
 : get-count ( -- d )
   next-arg 2dup d0= if 2drop ask then
   begin #0. 2over dup if >number nip else 2drop 1 then while
-    2drop .\" Invalid input \"" type .\" \", try again..." cr ask
+    2drop .\" Invalid countdown \"" type .\" \", try again..." cr ask
   repeat 2nip ;
 
 : count-down ( u -- )
