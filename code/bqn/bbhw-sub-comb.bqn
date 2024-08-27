@@ -11,7 +11,7 @@ TrimBlanks  ← (∨`⌾⌽' '⊸≠)⊸/(∨`' '⊸≠)⊸/
 AskInput    ← TrimBlanks •GetLine∘•term.OutRaw∘⊢⟜"countdown: "
 AskIfEmpty  ← NotEmpty◶⟨AskInput,⊢⟩
 OnlyDigits  ← ⊑∘(×´)(∊⟜"0123456789")¨
-ValidInput  ← (NotEmpty∧OnlyDigits)⊢
+ValidInput  ← (NotEmpty ∧ OnlyDigits)⊢
 SayInvalid  ← •Out("Invalid countdown "⊸∾)∘('"'⊸∾)∘(∾⟜", try again...")∘(∾⟜'"')
 AskInvalid  ← AskInput NotEmpty◶⟨⊢,SayInvalid⟩
 AskWhileBad ← AskInvalid •_while_ (¬ValidInput)
