@@ -1,0 +1,8 @@
+#! /bin/bash -e
+# Detailed instructions at https://chapel-lang.org/docs/usingchapel/QUICKSTART.html
+chapel_version=2.1.0
+wget -c https://github.com/chapel-lang/chapel/releases/download/${chapel_version}/chapel-${chapel_version}.tar.gz
+tar xzf chapel-${chapel_version}.tar.gz
+cd chapel-${chapel_version}/
+source util/quickstart/setchplenv.bash
+make

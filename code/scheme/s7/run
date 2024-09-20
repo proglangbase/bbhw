@@ -9,13 +9,14 @@
 S7=$(which s7)
 if [ "$S7" = "" ]; then
     PATH_HERE=$(pwd)/$(dirname $0)
-    PATH_REPO="$PATH_HERE/s7-patched"
+    PATH_REPO="$PATH_HERE/s7"
     S7="$PATH_REPO/s7"
     if [ ! -f $S7 ]; then
         if [ ! -d $PATH_REPO ]; then
-            git clone -v git@gitlab.com:aboa/s7-patched
+            git clone -v git@gitlab.com:aboa/s7
         fi
         cd $PATH_REPO
+        git checkout patch-v-10-06-d-20230621
         gcc -o s7 repl.c s7.c
         cd $PATH_HERE
     fi

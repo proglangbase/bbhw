@@ -1,0 +1,14 @@
+#! /bin/sh
+#pforth=pforth-2.0.1/fth/pforth_standalone
+pforth=pforth-2.0.1/platforms/unix/pforth_standalone
+[ -x $pforth ] || ./get
+if [ $# != 0 ] ; then
+        echo "Note: pforth does not support command line arguments!"
+        echo "Instead, here's an interactive pforth."
+        echo "Load bbhw with:  include bbhw-norun.fs"
+        echo "Then run:        bbhw $*"
+        head -n-2 bbhw.fs > bbhw-norun.fs
+        $pforth
+else
+        $pforth -q bbhw.fs
+fi

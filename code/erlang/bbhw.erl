@@ -1,72 +1,40 @@
 -module(bbhw).
 -export([main/0, main/1]).
 
-main()    -> main([]).             % `erl -noshell -s bbhw main [countdown] -s init stop`
-main([])  -> run();                % `escript bbhw.erl [countdown]`
-                                   % when countdown is not supplied.
+badArg(S) -> io:format("Invalid countdown ~p, try again...\n", [S]), main().
+badNum(N) -> badArg(lists:flatten(io_lib:format("~p", [N]))).
 
-main(Arg) when is_integer(Arg) ->  % `bbhw:main(<nnn>)` from shell.
-  case isItGood(Arg) of
-    true  -> run(Arg);
-    false -> isBadArg(Arg)
-  end;
-  
-main(Arg) ->
-  Is_string = io_lib:printable_list(Arg),
-  Is_list   = is_list(Arg),    
-  Is_atom   = is_atom(Arg),        % `erl -noshell` args come in as atoms.
-  
-  if 
-    Is_string -> 
-      case getCountdown(Arg) of
-        error -> main();
-        C     -> run(C)
-      end;
-      
-    Is_list -> main(hd(Arg));      % true for `Is_string`.
-    Is_atom -> main(atom_to_list(Arg));
-    true    -> isBadArg(Arg)
-  end.
-  
-getCountdown(S) ->
-  case string:to_integer(S) of
-    {I, []} -> case isItGood(I) of 
-      true -> I; 
-      _    -> isNotGood(I) 
-    end;
-    _ -> isNotGood(S)
-  end.
-   
-isBadArg(Arg) ->
-  isNotGood(Arg),
-  run().
-
-isItGood(I) -> 
-  I >= 0.
-
-isNotGood(S) -> 
-  io:format("Invalid countdown ~p, try again...\n", [S]), 
-  error.
-    
-readInput() ->
+main() ->
   case io:get_line("countdown: ") of
-    eof        -> readInput();
-    {error, _} -> readInput();
-    "\n"       -> readInput();
-    Line       -> case getCountdown(string:strip(Line, right, $\n)) of
-      error -> readInput();
-      I     -> I
-    end
+    eof        -> main();
+    {error, _} -> main();
+    Line       -> main(string:chomp(Line))
   end.
 
-run()  -> run(readInput()).    
-run(C) ->
+main([]) -> main();
+
+main(F) when is_float(F)          -> badNum(F);
+main(I) when is_integer(I), I < 0 -> badNum(I);
+main(A) when is_atom(A)           -> main(atom_to_list(A));
+
+main(L) when is_list(L) ->
+  case io_lib:printable_list(L) of
+    true ->
+      case string:to_integer(L) of
+        {I, []} -> main(I);
+        _       -> badArg(L)
+      end;
+    false -> main(lists:concat(lists:join(" ", L)))
+  end;
+
+main(Count) when is_integer(Count), Count >= 0 -> 
+  Loop = fun Loop(0) -> ok; Loop(I) ->
+    io:format("~B...", [I]),
+    timer:sleep(1000), 
+    Loop(I-1)
+  end,
   io:format("World, Hello..."),
-  rundown(C),
-  io:format("Bye Bye.\n").
-  
-rundown(0) -> ok;
-rundown(C) ->
-  io:format("~B...", [C]),
-  timer:sleep(1000), 
-  rundown(C-1).
+  Loop(Count),
+  io:format("Bye Bye.\n");
+
+main(Unk) -> badArg(Unk).

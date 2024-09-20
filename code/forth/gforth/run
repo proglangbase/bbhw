@@ -1,0 +1,12 @@
+#! /bin/bash -e
+# https://gforth.org/
+if ! type gforth >& /dev/null ; then
+  if ! [ -x gforth/bin/gforth ] ; then
+    ./get
+  fi
+  gforth () {
+    gforth/bin/gforth "$@"
+  }
+fi
+gforth bbhw.fs "$@"
+

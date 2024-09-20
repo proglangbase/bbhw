@@ -6,20 +6,19 @@
 #   License, v. 2.0. If a copy of the MPL was not distributed with this
 #   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #
-GAMBIT=$(which gsi)
-if [ "$GAMBIT" = "" ]; then
+NGN_K=$(which k)
+if [ "$NGN_K" = "" ]; then
   PATH_HERE=$(pwd)/$(dirname $0)
-  PATH_REPO="$PATH_HERE/gambit"
-  GAMBIT="$PATH_REPO/gsi/gsi"
-  if [ ! -f $GAMBIT ]; then
+  PATH_REPO="$PATH_HERE/ngn-k"
+  NGN_K="$PATH_REPO/k"
+  if [ ! -f $NGN_K ]; then
     if [ ! -d $PATH_REPO ]; then
-      git clone -v git@github.com:aboalang/gambit
+      git clone -v git@gitlab.com:aboa/ngn-k
     fi
     cd $PATH_REPO
-    git checkout v4.9.5
-    ./configure --prefix $PATH_REPO
-    make -j4
+    git checkout aboa-stable
+    make
     cd $PATH_HERE
   fi
 fi
-$GAMBIT bbhw.scm $@
+$NGN_K bbhw.k $@

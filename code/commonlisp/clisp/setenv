@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+if [ -z "$(which clisp)" ]; then
+  PATH_HERE=$(pwd)/$(dirname ${BASH_SOURCE[0]})
+  PATH_TOOL="$PATH_HERE/_clisp"
+  PATH_CMDS="$PATH_TOOL/bin"
+  if [ ! -e "$PATH_CMDS/clisp" ]; then
+    while [ 1 ]; do
+      echo "CLisp is required but not installed."
+      read -p "Do you want to install a copy (y/N)? " -n1
+      [ -n "$REPLY" ] && echo
+      case "${REPLY^^}" in
+        Y) break 2;;
+        N) return 1;;
+       '') return 1;;
+      esac
+    done
+    [ -z "$(which gcc)" ]  && { echo "'gcc' command not found";  MISSING="Y"; }
+    [ -z "$(which make)" ] && { echo "'make' command not found"; MISSING="Y"; }
+    if [ -n "$MISSING" ]; then
+      echo "Please install the missing command(s) and try again."
+      return 1
+    fi
+    TOOL_NAME=clisp-2.49
+    ARCH_NAME=$TOOL_NAME.tar.gz
+    rm -fr "$PATH_TOOL"
+    mkdir "$PATH_TOOL"
+    wget https://ftp.gnu.org/pub/gnu/clisp/latest/$ARCH_NAME
+    mv $ARCH_NAME $PATH_TOOL
+    tar xzf $PATH_TOOL/$ARCH_NAME -C "$PATH_TOOL" --strip-components 1
+    cd "$PATH_TOOL"
+    ./configure build --ignore-absence-of-libsigsegv --prefix=${PATH_TOOL}
+    cd build
+    make
+    make install
+    cd "$PATH_HERE"
+  fi
+  export PATH="$PATH:$PATH_CMDS"
+fi

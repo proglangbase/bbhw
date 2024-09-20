@@ -1,0 +1,31 @@
+#! /bin/bash -e
+# https://gforth.org/
+GFORTH_VER=0.7.3
+PREFIX="$PWD/gforth"
+
+ # libffi: gforth dependency
+wget -c https://github.com/libffi/libffi/releases/download/v3.4.6/libffi-3.4.6.tar.gz
+tar xzf libffi-3.4.6.tar.gz
+pushd libffi-3.4.6
+./configure --prefix="$PREFIX" --disable-debug --disable-docs
+make
+make install
+popd
+
+# libtool: gforth dependency
+wget -c https://ftpmirror.gnu.org/libtool/libtool-2.4.7.tar.gz
+tar xzf libtool-2.4.7.tar.gz
+pushd libtool-2.4.7
+./configure --prefix="$PREFIX"
+make
+make install
+popd
+
+# gforth
+wget -c https://ftp.gnu.org/gnu/gforth/gforth-"$GFORTH_VER".tar.gz
+tar xzf gforth-"$GFORTH_VER".tar.gz
+pushd gforth-"$GFORTH_VER"
+LTDL_LIBRARY_PATH="$PREFIX/lib" ./configure --prefix="$PREFIX"
+make
+make install
+popd
